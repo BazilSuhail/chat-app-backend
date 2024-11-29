@@ -1,36 +1,20 @@
 const express = require('express');
-const WebSocket = require('ws');
-const http = require('http');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const connectDB = require('./mongoDb/db');  
+const path = require('path');
  
+dotenv.config();
+connectDB();
+
 const app = express();
  
-const server = http.createServer(app);
+app.use(cors());
+app.use(express.json());
+
+
+app.use('/chat-app/auth', require("./routes/userRoutes"));
  
-const wss = new WebSocket.Server({ server });
  
-wss.on('connection', (ws) => {
-  console.log('New client connected');
-   
-  ws.send('Welcome to the chat server!');
-   
-  ws.on('message', (message) => {
-    console.log('Received: %s', message); 
-    wss.clients.forEach(client => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(message);
-      }
-    });
-  });
-   
-  ws.on('close', () => {
-    console.log('Client disconnected');
-  });
-});
- 
-app.get('/', (req, res) => {
-  res.send('Hello World! WebSocket server is running.');
-});
- 
-server.listen(3001, () => {
-  console.log('Server is running on port 3001');
-});
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
