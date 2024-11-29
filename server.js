@@ -14,6 +14,7 @@ app.use(express.json());
 
 
 app.use('/chat-app/auth', require("./routes/userRoutes"));
+app.use('/chat-app/conversation', require("./routes/conversationRoutes"));
  
  
 const PORT = process.env.PORT || 3001;
