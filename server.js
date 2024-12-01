@@ -14,10 +14,16 @@ app.use(express.json());
 
 
 app.use('/chat-app/auth', require("./routes/userRoutes"));
-app.use('/chat-app/conversation', require("./routes/conversationRoutes"));
-
 
 app.use('/chat-app/conversation', require("./routes/conversationRoutes"));
+
+app.use('/chat-app/conversation', require("./routes/conversationRoutes"));
+
+app.use('/chat-app/navbar-info', require("./routes/userprofileRoutes"));
+
+
+app.use('/chat-app/user/conversation', require("./routes/conversationRoutes"));
+app.use('/chat-app/conversations/messages', require("./routes/messageRoutes"));
  
  
 const PORT = process.env.PORT || 3001;

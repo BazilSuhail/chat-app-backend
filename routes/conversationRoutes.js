@@ -1,11 +1,13 @@
-const express = require('express'); 
-const conversationController = require('../controllers/conversationController'); 
-
+const express = require('express');
 const router = express.Router();
- 
+const conversationController = require('../controllers/conversationController');
+const authMiddleware = require('../middleware/authMiddleware'); // Middleware for authentication
 
-// Conversation routes
-router.post('/conversations', conversationController.createConversation);
-router.get('/conversations/:userId', conversationController.getUserConversations);
- 
+// Route to search user by email
+router.get('/search', authMiddleware, conversationController.searchUserByEmail);
+
+// Route to start a conversation
+router.post('/start', authMiddleware, conversationController.startConversation);
+router.get('/conversations', authMiddleware, conversationController.getUserConversations);
+
 module.exports = router;
